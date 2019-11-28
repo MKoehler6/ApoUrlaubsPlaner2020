@@ -1,5 +1,6 @@
 package apoPlaner2020;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,12 +15,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class MAbearbeitenFenster extends JFrame {
 	
 	Mitarbeiter mitarbeiter;
+	String mitarbeiterName;
 	Controller controller;
 	String[] tageString = {"Mo","Di","Mi","Do","Fr"};
 	String[] vormNachmString = {"vorm","nachm"};
@@ -27,9 +30,13 @@ public class MAbearbeitenFenster extends JFrame {
 	JRadioButton[][][] radioButtons = new JRadioButton[5][2][2]; // Tag, vormNachm, geradeUngerade
 	JPanel[][] panelArray  = new JPanel[2][2]; // vormNachm, geradeUngerade
 	boolean dienstplanGeaendert = false;
+	DefaultComboBoxModel<String> model;
+	JComboBox<String> comboBox;
+	ArrayList<Mitarbeiter> mitarbeiterArrayList;
 	
 	public MAbearbeitenFenster(ArrayList<Mitarbeiter> mitarbeiterArrayList, Controller controller) {
 		super("Mitarbeiter bearbeiten");
+		this.mitarbeiterArrayList = mitarbeiterArrayList;
 		this.controller = controller;
 		mitarbeiter = mitarbeiterArrayList.get(0);
 		
@@ -47,13 +54,15 @@ public class MAbearbeitenFenster extends JFrame {
 		panelNorth.add(labelLeer);
 		JLabel labelMAauswaehlen = new JLabel("Mitarbeiter auswählen", SwingConstants.CENTER);
 		panelNorth.add(labelMAauswaehlen);
-		
+//		***************************************************************************************
+//		ComboBox
+//		***************************************************************************************
 		JPanel panelComboBox = new JPanel();
-		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		model = new DefaultComboBoxModel<String>();
 		for (int i = 0; i < mitarbeiterArrayList.size(); i++) {
 			model.addElement(mitarbeiterArrayList.get(i).getName());
 		}
-        JComboBox<String> comboBox = new JComboBox<String>(model);
+        comboBox = new JComboBox<String>(model);
         comboBox.addActionListener(new ActionListener() {
 			
 			@Override
@@ -68,19 +77,33 @@ public class MAbearbeitenFenster extends JFrame {
 		});
         panelComboBox.add(comboBox);
         panelNorth.add(panelComboBox);
-        
+//		***************************************************************************************
+//		Button Neuer Mitarbeiter
+//		***************************************************************************************
         JPanel panelButtonNeuerMA = new JPanel();
         JButton buttonNeuerMA = new JButton("Neuen Mitarbeiter anlegen");
+        buttonNeuerMA.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (dienstplanGeaendert) {
+					speicherRadioButtonsInNeuemDienstplan();
+					dienstplanGeaendert = false;
+				}
+				mitarbeiterNameEingebenFenster();
+			}
+		});
         panelButtonNeuerMA.add(buttonNeuerMA);
         panelNorth.add(panelButtonNeuerMA);
 		add(panelNorth);
 		
 		JLabel labelDienstplan = new JLabel("Gerade Woche            ***  DIENSTPLAN  ***            Ungerade Woche", SwingConstants.CENTER);
 		panelSouth.add(labelDienstplan);
-		
+//		***************************************************************************************
+//		Panel für Dienstplan RadioButtons
+//		***************************************************************************************
 		JPanel panelDienstplan = new JPanel();
 		panelDienstplan.setLayout(new GridLayout(1,4));
-		
 		JPanel panelGeradevormittag = new JPanel();
 		panelGeradevormittag.setLayout(new GridLayout(5,0));
 		panelArray[0][0] = panelGeradevormittag;
@@ -117,7 +140,9 @@ public class MAbearbeitenFenster extends JFrame {
 		panelDienstplan.setBorder(new EmptyBorder(0, 40, 0, 0));;
 		
 		panelSouth.add(panelDienstplan);
-		
+//		***************************************************************************************
+//		Button OK
+//		***************************************************************************************
 		JPanel panelButtons = new JPanel();
 		JPanel panelOK = new JPanel();
         JButton buttonOK = new JButton("OK");
@@ -134,6 +159,9 @@ public class MAbearbeitenFenster extends JFrame {
 				controller.updateView();
 			}
 		});
+//		***************************************************************************************
+//		Button Abbrechen
+//		**************************************************************************************
         JPanel panelAbbrechen = new JPanel();
         JButton buttonAbbrechen = new JButton("Abbrechen");
         panelAbbrechen.add(buttonAbbrechen);
@@ -195,6 +223,51 @@ public class MAbearbeitenFenster extends JFrame {
 		Calendar calendar = new GregorianCalendar();
 		dienstplan.setGueltigAb(calendar.get(Calendar.WEEK_OF_YEAR));
 	}
+	
+	public void mitarbeiterNameEingebenFenster() {
+		JPanel hinweisPanel = new JPanel();
+		JFrame hinweisFrame = new JFrame();
+		
+		hinweisFrame.setSize(200, 100);
+		hinweisFrame.setLocationRelativeTo(null);
+		hinweisPanel.setLayout(new GridLayout(3,1));
+		JLabel textLabel = new JLabel("Bitte Nachnamen des Mitarbeiters eingeben");
+		hinweisPanel.add(textLabel);
+		JTextField textField = new JTextField();
+		hinweisPanel.add(textField);
+		JButton buttonOK = new JButton("OK");
+		buttonOK.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (textField.getText().length() != 0) {
+					mitarbeiterName = textField.getText();
+					mitarbeiter = new Mitarbeiter(mitarbeiterName);
+					mitarbeiterArrayList.add(mitarbeiter);
+					deselectAllRadioButtons();
+					speicherRadioButtonsInNeuemDienstplan();
+					model.addElement(mitarbeiter.getName());
+					comboBox.setSelectedItem(mitarbeiterName);
+				}
+				hinweisFrame.setVisible(false);
+				hinweisFrame.dispose();
+			}
+		});
+		hinweisPanel.add(buttonOK);
+		hinweisFrame.add(hinweisPanel);
+		hinweisFrame.setVisible(true);
+	}
+	
+	public void deselectAllRadioButtons() {
+		for (int tag = 0; tag < 5; tag++) {
+			for (int vormNachm = 0; vormNachm < 2; vormNachm++) {
+				for (int geradeUngerade = 0; geradeUngerade < 2; geradeUngerade++) {
+					radioButtons[tag][vormNachm][geradeUngerade].setSelected(false);
+				}
+			}
+		}
+	}
+	
 	class RadioButtonListener implements ActionListener {
 
 		@Override
