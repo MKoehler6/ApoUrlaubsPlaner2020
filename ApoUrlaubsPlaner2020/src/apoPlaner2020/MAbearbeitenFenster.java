@@ -26,6 +26,7 @@ public class MAbearbeitenFenster extends JFrame {
 	String[] geradeUngeradeString = {"gerade","ungerade"};
 	JRadioButton[][][] radioButtons = new JRadioButton[5][2][2]; // Tag, vormNachm, geradeUngerade
 	JPanel[][] panelArray  = new JPanel[2][2]; // vormNachm, geradeUngerade
+	boolean dienstplanGeaendert = false;
 	
 	public MAbearbeitenFenster(ArrayList<Mitarbeiter> mitarbeiterArrayList, Controller controller) {
 		super("Mitarbeiter bearbeiten");
@@ -57,6 +58,10 @@ public class MAbearbeitenFenster extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (dienstplanGeaendert) {
+					speicherRadioButtonsInNeuemDienstplan();
+					dienstplanGeaendert = false;
+				}
 				mitarbeiter = mitarbeiterArrayList.get(comboBox.getSelectedIndex());
 				setzeRadioButtonsNeu();
 			}
@@ -113,6 +118,7 @@ public class MAbearbeitenFenster extends JFrame {
 		
 		panelSouth.add(panelDienstplan);
 		
+		JPanel panelButtons = new JPanel();
 		JPanel panelOK = new JPanel();
         JButton buttonOK = new JButton("OK");
         panelOK.add(buttonOK);
@@ -122,10 +128,26 @@ public class MAbearbeitenFenster extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				dispose();
+				if (dienstplanGeaendert) {
+					speicherRadioButtonsInNeuemDienstplan();
+				}
 				controller.updateView();
 			}
 		});
-        panelSouth.add(panelOK);
+        JPanel panelAbbrechen = new JPanel();
+        JButton buttonAbbrechen = new JButton("Abbrechen");
+        panelAbbrechen.add(buttonAbbrechen);
+        buttonAbbrechen.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				dispose();
+			}
+		});
+        panelButtons.add(panelOK);
+        panelButtons.add(panelAbbrechen);
+        panelSouth.add(panelButtons);
 		
 		add(panelSouth);
 		
@@ -151,29 +173,34 @@ public class MAbearbeitenFenster extends JFrame {
 		}
 	}
 	
+	public void speicherRadioButtonsInNeuemDienstplan() {
+		Dienstplan dienstplan  = new Dienstplan();
+		mitarbeiter.dienstplanArrayList.add(dienstplan);
+		for (int tag = 0; tag < 5; tag++) {
+			for (int vormNachm = 0; vormNachm < 2; vormNachm++) {
+				if (radioButtons[tag][vormNachm][0].isSelected())
+					dienstplan.getGeradeWoche()[tag][vormNachm] = 1;
+				else 
+					dienstplan.getGeradeWoche()[tag][vormNachm] = 0;
+			}
+		}
+		for (int tag = 0; tag < 5; tag++) {
+			for (int vormNachm = 0; vormNachm < 2; vormNachm++) {
+				if (radioButtons[tag][vormNachm][1].isSelected())
+					dienstplan.getUngeradeWoche()[tag][vormNachm] = 1;
+				else 
+					dienstplan.getUngeradeWoche()[tag][vormNachm] = 0;
+			}
+		}
+		Calendar calendar = new GregorianCalendar();
+		dienstplan.setGueltigAb(calendar.get(Calendar.WEEK_OF_YEAR));
+	}
 	class RadioButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String geradeUngerade = e.getSource().toString().split("!")[1].split(":")[0];
-			int index1 = Integer.parseInt(e.getSource().toString().split("!")[1].split(":")[1]);
-			int index2 = Integer.parseInt(e.getSource().toString().split("!")[1].split(":")[2]);
-			if (geradeUngerade.equals("gerade"))
-				if (mitarbeiter.dienstplanArrayList.get(mitarbeiter.dienstplanArrayList.size()-1).getGeradeWoche()[index1][index2] == 1) 
-					mitarbeiter.dienstplanArrayList.get(mitarbeiter.dienstplanArrayList.size()-1).getGeradeWoche()[index1][index2] = 0;
-				else
-					mitarbeiter.dienstplanArrayList.get(mitarbeiter.dienstplanArrayList.size()-1).getGeradeWoche()[index1][index2] = 1;
-			if (geradeUngerade.equals("ungerade"))
-				if (mitarbeiter.dienstplanArrayList.get(mitarbeiter.dienstplanArrayList.size()-1).getUngeradeWoche()[index1][index2] == 1) 
-					mitarbeiter.dienstplanArrayList.get(mitarbeiter.dienstplanArrayList.size()-1).getUngeradeWoche()[index1][index2] = 0;
-				else
-					mitarbeiter.dienstplanArrayList.get(mitarbeiter.dienstplanArrayList.size()-1).getUngeradeWoche()[index1][index2] = 1;
-		
-			Calendar calendar = new GregorianCalendar();
-			mitarbeiter.dienstplanArrayList.get(mitarbeiter.dienstplanArrayList.size()-1)
-				.setGueltigAb(calendar.get(Calendar.WEEK_OF_YEAR));
+			dienstplanGeaendert = true;
 		}
 		
 	}
-
 }

@@ -73,7 +73,7 @@ public class DataModel {
 	}
 	
 	public void updateDienstplanInTageArray(Mitarbeiter mitarbeiter) {
-		for (int woche = 0; woche < 4; woche++) {
+		for (int woche = 0; woche < 52; woche++) {
 			int dienstplan = getAktuellerDienstplanFuerMA(woche, mitarbeiter);
 			for (int wochentag = 0; wochentag < 5; wochentag++) {
 				Tag tag = new Tag(woche, wochentag);

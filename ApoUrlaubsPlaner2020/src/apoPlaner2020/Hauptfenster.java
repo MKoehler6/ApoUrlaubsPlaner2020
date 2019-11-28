@@ -13,7 +13,7 @@ public class Hauptfenster {
 	
 	public void konsolenAusgabe() {
 		System.out.println("========================================================================================================");
-		for (int woche = 0; woche < 4; woche++) {
+		for (int woche = 0; woche < 52; woche++) {
 			for (int ma = 0; ma < mitarbeiterArrayList.size(); ma++) {
 				System.out.print(mitarbeiterArrayList.get(ma).getName() + " ");
 				for (int wochentag = 0; wochentag < 5; wochentag++) {
