@@ -16,6 +16,17 @@ public class Mitarbeiter {
 		return name;
 	}
 	
+	public int gibAnzahlTageUrlaub() {
+		int zaehler = 0;
+		for (int woche = 0; woche < 52; woche++) {
+			for (int tag = 0; tag < 5; tag++) {
+				if (tageArray[woche][tag].isUrlaub()) zaehler++;
+			}
+			
+		}
+		return zaehler;
+	}
+	
 	
 	
 
