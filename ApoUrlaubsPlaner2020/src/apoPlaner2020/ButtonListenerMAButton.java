@@ -8,11 +8,11 @@ import javax.swing.JButton;
 
 public class ButtonListenerMAButton implements ActionListener{
 	
-	JButton button;
+	Controller controller;
 	
-	public ButtonListenerMAButton(JButton button)
+	public ButtonListenerMAButton(Controller controller)
 	{
-		this.button = button;
+		this.controller = controller;
 	}
 
 	@Override

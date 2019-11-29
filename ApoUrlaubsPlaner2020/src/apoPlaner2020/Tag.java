@@ -1,5 +1,7 @@
 package apoPlaner2020;
 
+import javax.swing.JButton;
+
 public class Tag {
 	
 	private int woche;
@@ -7,10 +9,25 @@ public class Tag {
 	private boolean urlaub = false;
 	private boolean dienstVormittag = false;
 	private boolean dienstNachmittag = false;
+	JButton buttonVormittag;
+	JButton buttonNachmittag;
 	
 	public Tag(int woche, int wochentag) {
 		this.woche = woche;
 		this.wochentag = wochentag;
+	}
+	
+	public void speicherButtonVormittag(JButton button) {
+		buttonVormittag = button;
+	}
+	public void speicherButtonNachmittag(JButton button) {
+		buttonNachmittag = button;
+	}
+	public JButton gibButtonVormittag() {
+		return buttonVormittag;
+	}
+	public JButton gibButtonNachmittag() {
+		return buttonNachmittag;
 	}
 
 	public boolean isUrlaub() {

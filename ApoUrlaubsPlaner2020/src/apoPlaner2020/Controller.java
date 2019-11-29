@@ -10,7 +10,7 @@ public class Controller implements ActionListener {
 	
 	public Controller() {
 		dataModel = new DataModel();
-		hauptfenster = new Hauptfenster(dataModel.mitarbeiterArrayList);
+		hauptfenster = new Hauptfenster(dataModel.mitarbeiterArrayList, this);
 		hauptfenster.konsolenAusgabe();
 		new MAbearbeitenFenster(dataModel.mitarbeiterArrayList, this);
 		

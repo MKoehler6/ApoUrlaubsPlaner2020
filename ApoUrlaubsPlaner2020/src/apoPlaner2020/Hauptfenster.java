@@ -29,11 +29,13 @@ public class Hauptfenster extends JPanel {
 	JButton test;
 	Datum datum;
 	JButton[][][] buttonArray = new JButton[52][5][2];
+	Controller controller;
 		
-	public Hauptfenster(ArrayList<Mitarbeiter> mitarbeiterArrayList)
+	public Hauptfenster(ArrayList<Mitarbeiter> mitarbeiterArrayList, Controller controller)
 	{
 		datum = new Datum();
 		this.mitarbeiterArrayList = mitarbeiterArrayList;
+		this.controller = controller;
 		fenster.setSize(1300, 900);
 		fenster.setLocationRelativeTo(null);
 		baueFensterNeu();
@@ -60,8 +62,8 @@ public class Hauptfenster extends JPanel {
 	{
 		baueScrollBereichNeu();
 		JScrollPane scrollPane = new JScrollPane(scrollbereich);
-		// Menübereich
-		JLabel menuLabel = new JLabel("Menü", JLabel.CENTER);
+		// MenÃ¼bereich
+		JLabel menuLabel = new JLabel("MenÃ¼", JLabel.CENTER);
 		menuLabel.setOpaque(true);
 		menuLabel.setBackground(new Color(190, 190, 190));
 		menuLabel.setFont(new Font("Arial", 1, 14));
@@ -129,9 +131,9 @@ public class Hauptfenster extends JPanel {
 				b.setOpaque(true);
 				b.setBackground(new Color(255, 255, 255));
 				b.setBorderPainted(true);
-				b.addActionListener(new ButtonListenerMAButton(this, buttonSpeicher));
-				b.setRolloverEnabled(false); // wenn Maus drüberfährt keine Hervorhebung
-				buttonSpeicher.speichereButton(b);
+				b.addActionListener(new ButtonListenerMAButton(controller));
+				b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
+				mitarbeiterArrayList.get(i).buttonMAArray[wochen - 1] = b;
 			}
 			
 			panelMo.add(new JLabel("MONTAG"));
@@ -142,7 +144,7 @@ public class Hauptfenster extends JPanel {
 			panelMo.add(new JLabel("vormittag"));
 			panelMo.add(new JLabel("nachmittag"));
 	//		https://stackoverflow.com/questions/5654208/making-a-jbutton-invisible-but-clickable
-			for (int i = 1; i <= buttonSpeicher.mitarbeiterArrayList.size()*2; i++)
+			for (int i = 0; i < mitarbeiterArrayList.size()*2; i++)
 			{
 				JButton b = new JButton();
 				panelMo.add(b);
@@ -150,7 +152,7 @@ public class Hauptfenster extends JPanel {
 				b.setOpaque(true);
 				b.setBackground(gibFarbeFuerDienstplan(i-1, 0, wochen));
 				b.setBorderPainted(true);
-				b.setRolloverEnabled(false); // wenn Maus drüberfährt keine Hervorhebung
+				b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
 				b.addActionListener(new ButtonListenerMAButton(this, buttonSpeicher));
 				buttonSpeicher.speichereButton(b);
 			}
@@ -172,7 +174,7 @@ public class Hauptfenster extends JPanel {
 				b.setOpaque(true);
 				b.setBackground(gibFarbeFuerDienstplan(i-1, 1, wochen));
 				b.setBorderPainted(true);
-				b.setRolloverEnabled(false); // wenn Maus drüberfährt keine Hervorhebung
+				b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
 				b.addActionListener(new ButtonListenerMAButton(this, buttonSpeicher));
 				buttonSpeicher.speichereButton(b);
 			}
@@ -194,7 +196,7 @@ public class Hauptfenster extends JPanel {
 				b.setOpaque(true);
 				b.setBackground(gibFarbeFuerDienstplan(i-1, 2, wochen));
 				b.setBorderPainted(true);
-				b.setRolloverEnabled(false); // wenn Maus drüberfährt keine Hervorhebung
+				b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
 				b.addActionListener(new ButtonListenerMAButton(this, buttonSpeicher));
 				buttonSpeicher.speichereButton(b);
 			}
@@ -216,7 +218,7 @@ public class Hauptfenster extends JPanel {
 				b.setOpaque(true);
 				b.setBackground(gibFarbeFuerDienstplan(i-1, 3, wochen));
 				b.setBorderPainted(true);
-				b.setRolloverEnabled(false); // wenn Maus drüberfährt keine Hervorhebung
+				b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
 				b.addActionListener(new ButtonListenerMAButton(this, buttonSpeicher));
 				buttonSpeicher.speichereButton(b);
 			}
@@ -238,7 +240,7 @@ public class Hauptfenster extends JPanel {
 				b.setOpaque(true);
 				b.setBackground(gibFarbeFuerDienstplan(i-1, 4, wochen));
 				b.setBorderPainted(true);
-				b.setRolloverEnabled(false); // wenn Maus drüberfährt keine Hervorhebung
+				b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
 				b.addActionListener(new ButtonListenerMAButton(this, buttonSpeicher));
 				buttonSpeicher.speichereButton(b);
 			}
