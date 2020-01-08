@@ -7,7 +7,7 @@ import java.time.temporal.IsoFields;
 
 public class Datum {
 	
-	int year = 2019;
+	int year = 2020;
 	int week;
 	int[] ferien = {1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1};
 	

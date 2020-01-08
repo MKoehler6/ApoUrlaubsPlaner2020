@@ -3,33 +3,43 @@ package apoPlaner2020;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+
 public class Controller implements ActionListener {
 	
-	Hauptfenster hauptfenster;
-	DataModel dataModel;
+	private Hauptfenster hauptfenster;
+	private KalenderPanel kalenderPanel;
+	private DataModel dataModel;
+	private int woche;
+	private int tag;
+	private int vormNachm;
 	
-	public Controller() {
-		dataModel = new DataModel();
-		hauptfenster = new Hauptfenster(dataModel.mitarbeiterArrayList, this);
+	
+	public Controller(DataModel dataModel, KalenderPanel kalenderPanel, Hauptfenster hauptfenster) {
+		this.dataModel = dataModel;
+		this.hauptfenster = hauptfenster;
+		this.kalenderPanel = kalenderPanel;
 		hauptfenster.konsolenAusgabe();
-		new MAbearbeitenFenster(dataModel.mitarbeiterArrayList, this);
-		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		JButton buttonClicked = (JButton) e.getSource();
+		if (buttonClicked instanceof MAButton) {
+			woche = ((MAButton) buttonClicked).getWoche();
+		} else if (buttonClicked instanceof KalenderButton) {
+			woche = ((KalenderButton) buttonClicked).getWoche();
+			tag = ((KalenderButton) buttonClicked).getTag();
+			vormNachm = ((KalenderButton) buttonClicked).getVormNachm();
+		}
 	}
 	
 	public void updateView() {
-		updateTageArray();
+		kalenderPanel.refresh();
 		hauptfenster.konsolenAusgabe();
 	}
 
-	public void updateTageArray() {
-		dataModel.updateTageArrayAlleMA();
-	}
+
 	
 	
 

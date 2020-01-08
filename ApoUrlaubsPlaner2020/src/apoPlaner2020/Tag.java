@@ -4,54 +4,32 @@ import javax.swing.JButton;
 
 public class Tag {
 	
-	private int woche;
-	private int wochentag;
-	private boolean urlaub = false;
-	private boolean dienstVormittag = false;
-	private boolean dienstNachmittag = false;
-	JButton buttonVormittag;
-	JButton buttonNachmittag;
+	private boolean isUrlaub = false;
+	private boolean isDienstVormittag = false;
+	private boolean isDienstNachmittag = false;
 	
-	public Tag(int woche, int wochentag) {
-		this.woche = woche;
-		this.wochentag = wochentag;
-	}
-	
-	public void speicherButtonVormittag(JButton button) {
-		buttonVormittag = button;
-	}
-	public void speicherButtonNachmittag(JButton button) {
-		buttonNachmittag = button;
-	}
-	public JButton gibButtonVormittag() {
-		return buttonVormittag;
-	}
-	public JButton gibButtonNachmittag() {
-		return buttonNachmittag;
-	}
-
 	public boolean isUrlaub() {
-		return urlaub;
+		return isUrlaub;
 	}
 
 	public void setUrlaub(boolean urlaub) {
-		this.urlaub = urlaub;
+		this.isUrlaub = urlaub;
 	}
 
 	public boolean isDienstVormittag() {
-		return dienstVormittag;
+		return isDienstVormittag;
 	}
 
 	public void setDienstVormittag(boolean dienstVormittag) {
-		this.dienstVormittag = dienstVormittag;
+		this.isDienstVormittag = dienstVormittag;
 	}
 
 	public boolean isDienstNachmittag() {
-		return dienstNachmittag;
+		return isDienstNachmittag;
 	}
 
 	public void setDienstNachmittag(boolean dienstNachmittag) {
-		this.dienstNachmittag = dienstNachmittag;
+		this.isDienstNachmittag = dienstNachmittag;
 	}
 	
 	
