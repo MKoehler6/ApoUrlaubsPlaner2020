@@ -8,6 +8,7 @@ public class MAButton extends JButton {
 	private Mitarbeiter mitarbeiter;
 	
 	public MAButton(int woche, Mitarbeiter mitarbeiter) {
+		super(mitarbeiter.getName() + " " + mitarbeiter.gibAnzahlTageUrlaub());
 		this.woche = woche;
 		this.mitarbeiter = mitarbeiter;
 	}

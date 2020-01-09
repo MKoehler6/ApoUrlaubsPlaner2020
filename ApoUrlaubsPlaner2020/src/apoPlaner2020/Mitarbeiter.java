@@ -23,6 +23,13 @@ public class Mitarbeiter {
 		return tageImJahrArray[woche][tag];
 	}
 	
+	public void setTag(int woche, int tag, boolean isUrlaub) {
+		Tag t = new Tag();
+		t.setUrlaub(isUrlaub);
+		tageImJahrArray[woche][tag] = t;
+//		TODO Dienst vormittag und nachmittag einfügen
+	}
+	
 	public void addDienstplan(Dienstplan dienstplan) {
 		dienstplanArrayList.add(dienstplan);
 	}

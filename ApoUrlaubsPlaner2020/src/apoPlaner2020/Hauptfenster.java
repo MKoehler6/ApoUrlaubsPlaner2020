@@ -1,35 +1,25 @@
 package apoPlaner2020;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 	
 	
 
 public class Hauptfenster extends JPanel {
 	
 	private ArrayList<Mitarbeiter> mitarbeiterArrayList;
-	JPanel menu = new JPanel(new GridLayout(9,1));
-	JPanel panelMA = new JPanel(new GridLayout(0,1));		
-	JPanel panelMo = new JPanel(new GridLayout(0,2));		
-	JPanel panelDi = new JPanel(new GridLayout(0,2));
-	JPanel panelMi = new JPanel(new GridLayout(0,2));
-	JPanel panelDo = new JPanel(new GridLayout(0,2));
-	JPanel panelFr = new JPanel(new GridLayout(0,2));
-	JPanel woche = new JPanel(new GridLayout(1,6));
-	JPanel scrollbereich = new JPanel(new GridLayout(0,1));
-	JPanel main = new JPanel(new BorderLayout());
+	JPanel menu;
+	JPanel main;
 	JFrame fenster = new JFrame("Apotheken Urlaubsplaner");
 	JButton test;
 	Datum datum;
 	JButton[][][] buttonArray = new JButton[52][5][2];
 	DataModel dataModel;
+	Controller controller;
 	KalenderPanel kalenderPanel;
 		
 	public Hauptfenster(DataModel dataModel, KalenderPanel kalenderPanel)
@@ -41,28 +31,18 @@ public class Hauptfenster extends JPanel {
 		fenster.setSize(1300, 900);
 		fenster.setLocationRelativeTo(null);
 		baueFensterNeu();
-		fenster.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) 
-			{
-//					try 
-//					{
-//						fenster.setVisible(false);
-//						speichern.speichereDatei();
-//						speichern.speichereJPG();
-//					} catch (IOException ex) 
-//					{
-//						ex.printStackTrace();
-//					}
-				System.exit(0);
-			}
-		});
-		fenster.setVisible(true);
+		fenster.addWindowListener(controller);
+	}
+	
+	public void setController(Controller controller) {
+		this.controller = controller;
 	}
 	
 	public void baueFensterNeu() 
 	{
+		main = new JPanel(new BorderLayout());
 		JScrollPane scrollPane = new JScrollPane(kalenderPanel);
+		menu = new JPanel(new GridLayout(9,1));
 		// Menuebereich
 		JLabel menuLabel = new JLabel("Menü", JLabel.CENTER);
 		menuLabel.setOpaque(true);
@@ -77,7 +57,7 @@ public class Hauptfenster extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				new MAbearbeitenFenster(mitarbeiterArrayList, controller);
 			}
 		});
 		menu.add(maBearbeitenButton);

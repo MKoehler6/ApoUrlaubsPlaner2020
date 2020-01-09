@@ -1,39 +1,31 @@
 package apoPlaner2020;
 
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.swing.JButton;
 
 public class DataModel {
 	
-	
-	
-	String pfad = System.getProperty("user.home") + "/Dropbox/HP Laptop/Urlaubsplaner2020NeuTest.txt";
-	String pfadJPG = System.getProperty("user.home") + "/Dropbox/HP Laptop/UrlaubsplanerJPG2020NeuTest.jpg";
-	File inputFile;
-	File outputFile;
-	
-	private int jahr = 20;
-	public int[] ferien = new int[52];
-	private ArrayList<Mitarbeiter> mitarbeiterArrayList = new ArrayList<>();
+	private int jahr;
+	private int[] ferien = new int[52];
+	private ArrayList<Mitarbeiter> mitarbeiterArrayList;
 	
 	public DataModel() {
-		inputFile = new File(pfad);
-		if (inputFile.exists()) {
-//			ladeDaten();
-		}
-		outputFile = new File(pfad);
-//		speichereDaten();
+		mitarbeiterArrayList = new ArrayList<>();
+	}
+	
+	public int getJahr() {
+		return jahr;
 	}
 	
 	public void setJahr(int jahr) {
 		this.jahr = jahr;
+	}
+	
+	public int getFerienInWocheX(int woche) {
+		return ferien[woche];
+	}
+	
+	public void setFerienInWocheX(int woche, int ferienOderNicht) {
+		ferien[woche] = ferienOderNicht;
 	}
 	
 	public void addMitarbeiter(Mitarbeiter mitarbeiter) {
@@ -44,60 +36,9 @@ public class DataModel {
 		return mitarbeiterArrayList;
 	}
 	
-	public void speichereDaten() {
-		try (FileOutputStream fileOutputStream = new FileOutputStream(outputFile)) {
-			fileOutputStream.write(jahr);
-			for (int i = 0; i < ferien.length; i++) {
-				fileOutputStream.write(0);
-			}
-			int anzahlMA = 2;
-			fileOutputStream.write(anzahlMA);
-			String[] namen = {"Schmidt","Mähler"};
-			for (int i = 0; i < anzahlMA; i++) {
-//				Namen speichern
-				String name = namen[i];
-				for (int j = 0; j < 20; j++) {
-					if (j < name.length()) {
-						fileOutputStream.write(name.charAt(j));
-					} else {
-						fileOutputStream.write(0);
-					}
-				}
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void ladeDaten() {
-		try (FileInputStream fileInputStream = new FileInputStream(inputFile)) {
-			jahr = fileInputStream.read();
-			for (int i = 0; i < ferien.length; i++) {
-				ferien[i] = fileInputStream.read();
-			}
-			int anzahlMA = fileInputStream.read();
-			for (int i = 0; i < anzahlMA; i++) {
-//				Namen einlesen
-				String name = "";
-				int buchstabe;
-				for (int j = 0; j < 20; j++) {
-					if ((buchstabe = fileInputStream.read()) != 0) {
-						name = name + String.valueOf(buchstabe);
-					}
-				}
-				Mitarbeiter ma = new Mitarbeiter(name);
-				System.out.println(name);
-			}
-			
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	
+	
+	
 		
 //		Dienstplan testDienstplan1 = new Dienstplan();
 //		testDienstplan1.setGueltigAb(0);

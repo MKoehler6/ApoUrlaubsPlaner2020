@@ -8,6 +8,7 @@ public class Main
 		KalenderPanel kalenderPanel = new KalenderPanel(dataModel);
 		Hauptfenster hauptfenster = new Hauptfenster(dataModel, kalenderPanel);
 		Controller controller = new Controller(dataModel, kalenderPanel, hauptfenster);
+		
 	}
 
 }
