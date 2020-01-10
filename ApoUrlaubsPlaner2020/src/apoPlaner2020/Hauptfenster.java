@@ -31,7 +31,6 @@ public class Hauptfenster extends JPanel {
 		fenster.setSize(1300, 900);
 		fenster.setLocationRelativeTo(null);
 		baueFensterNeu();
-		fenster.addWindowListener(controller);
 	}
 	
 	public void setController(Controller controller) {
@@ -57,7 +56,7 @@ public class Hauptfenster extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new MAbearbeitenFenster(mitarbeiterArrayList, controller);
+				new MAbearbeitenFenster(dataModel, controller);
 			}
 		});
 		menu.add(maBearbeitenButton);

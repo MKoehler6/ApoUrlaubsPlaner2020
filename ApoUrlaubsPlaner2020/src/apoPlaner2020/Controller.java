@@ -24,9 +24,10 @@ public class Controller extends WindowAdapter implements ActionListener {
 		this.hauptfenster = hauptfenster;
 		this.kalenderPanel = kalenderPanel;
 		ladenUndSpeichern = new LadenUndSpeichern(dataModel);
-		ladenUndSpeichern.ladeDaten();
+//		ladenUndSpeichern.ladeDaten();
 		kalenderPanel.setController(this);
 		hauptfenster.setController(this);
+		hauptfenster.fenster.addWindowListener(this);
 		kalenderPanel.refresh();
 //		hauptfenster.baueFensterNeu();
 		hauptfenster.fenster.setVisible(true);
@@ -34,7 +35,6 @@ public class Controller extends WindowAdapter implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Button geklickt");
 		JButton buttonClicked = (JButton) e.getSource();
 		if (buttonClicked instanceof MAButton) {
 			woche = ((MAButton) buttonClicked).getWoche();
@@ -44,6 +44,8 @@ public class Controller extends WindowAdapter implements ActionListener {
 			woche = ((KalenderButton) buttonClicked).getWoche();
 			tag = ((KalenderButton) buttonClicked).getTag();
 			vormNachm = ((KalenderButton) buttonClicked).getVormNachm();
+			mitarbeiter = ((KalenderButton) buttonClicked).getMitarbeiter();
+			System.out.println(woche + " " + tag + " " + vormNachm + " " + mitarbeiter.getName());
 		}
 	}
 	

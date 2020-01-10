@@ -72,15 +72,17 @@ public class KalenderPanel extends JPanel{
 			panelMo.add(new JLabel("vormittag"));
 			panelMo.add(new JLabel("nachmittag"));
 	//		https://stackoverflow.com/questions/5654208/making-a-jbutton-invisible-but-clickable
-			for (int i = 0; i < mitarbeiterArrayList.size()*2; i++)
+			for (int i = 0; i < mitarbeiterArrayList.size(); i++)
 			{
-				JButton b = new JButton();
-				panelMo.add(b);
-				b.setOpaque(true);
-				b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
-				b.setBorderPainted(true);
-				b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
-				b.addActionListener(controller);
+				for (int j = 0; j < 2; j++) {
+					JButton b = new KalenderButton(woche, 0, j, mitarbeiterArrayList.get(i));
+					panelMo.add(b);
+					b.setOpaque(true);
+					b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
+					b.setBorderPainted(true);
+					b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
+					b.addActionListener(controller);
+				}
 			}
 			panelMo.setBorder(new EmptyBorder(0, 10, 0, 10));
 			
@@ -92,15 +94,17 @@ public class KalenderPanel extends JPanel{
 			panelDi.add(new JLabel("vormittag"));
 			panelDi.add(new JLabel("nachmittag"));
 	//		https://stackoverflow.com/questions/5654208/making-a-jbutton-invisible-but-clickable
-			for (int i = 0; i < mitarbeiterArrayList.size()*2; i++)
+			for (int i = 0; i < mitarbeiterArrayList.size(); i++)
 			{
-				JButton b = new JButton();
-				panelDi.add(b);
-				b.setOpaque(true);
-				b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
-				b.setBorderPainted(true);
-				b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
-				b.addActionListener(controller);
+				for (int j = 0; j < 2; j++) {
+					JButton b = new KalenderButton(woche, 1, j, mitarbeiterArrayList.get(i));
+					panelDi.add(b);
+					b.setOpaque(true);
+					b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
+					b.setBorderPainted(true);
+					b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
+					b.addActionListener(controller);
+				}
 			}
 			panelDi.setBorder(new EmptyBorder(0, 0, 0, 10));
 			
@@ -112,15 +116,18 @@ public class KalenderPanel extends JPanel{
 			panelMi.add(new JLabel("vormittag"));
 			panelMi.add(new JLabel("nachmittag"));
 	//		https://stackoverflow.com/questions/5654208/making-a-jbutton-invisible-but-clickable
-			for (int i = 0; i < mitarbeiterArrayList.size()*2; i++)
+			for (int i = 0; i < mitarbeiterArrayList.size(); i++)
 			{
-				JButton b = new JButton();
-				panelMi.add(b);
-				b.setOpaque(true);
-				b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
-				b.setBorderPainted(true);
-				b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
-				b.addActionListener(controller);
+				for (int j = 0; j < 2; j++) 
+				{
+					JButton b = new KalenderButton(woche, 2, j, mitarbeiterArrayList.get(i));
+					panelMi.add(b);
+					b.setOpaque(true);
+					b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
+					b.setBorderPainted(true);
+					b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
+					b.addActionListener(controller);
+				}
 			}
 			panelMi.setBorder(new EmptyBorder(0, 0, 0, 10));
 			
@@ -132,15 +139,18 @@ public class KalenderPanel extends JPanel{
 			panelDo.add(new JLabel("vormittag"));
 			panelDo.add(new JLabel("nachmittag"));
 			//		https://stackoverflow.com/questions/5654208/making-a-jbutton-invisible-but-clickable
-			for (int i = 0; i < mitarbeiterArrayList.size()*2; i++)
+			for (int i = 0; i < mitarbeiterArrayList.size(); i++)
 			{
-				JButton b = new JButton();
-				panelDo.add(b);
-				b.setOpaque(true);
-				b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
-				b.setBorderPainted(true);
-				b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
-				b.addActionListener(controller);
+				for (int j = 0; j < 2; j++) 
+				{
+					JButton b = new KalenderButton(woche, 3, j, mitarbeiterArrayList.get(i));
+					panelDo.add(b);
+					b.setOpaque(true);
+					b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
+					b.setBorderPainted(true);
+					b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
+					b.addActionListener(controller);
+				}
 			}
 			panelDo.setBorder(new EmptyBorder(0, 0, 0, 10));
 			
@@ -152,15 +162,18 @@ public class KalenderPanel extends JPanel{
 			panelFr.add(new JLabel("vormittag"));
 			panelFr.add(new JLabel("nachmittag"));
 			//		https://stackoverflow.com/questions/5654208/making-a-jbutton-invisible-but-clickable
-			for (int i = 0; i < mitarbeiterArrayList.size()*2; i++)
+			for (int i = 0; i < mitarbeiterArrayList.size(); i++)
 			{
-				JButton b = new JButton();
-				panelFr.add(b);
-				b.setOpaque(true);
-				b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
-				b.setBorderPainted(true);
-				b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
-				b.addActionListener(controller);
+				for (int j = 0; j < 2; j++) 
+				{
+					JButton b = new KalenderButton(woche, 4, j, mitarbeiterArrayList.get(i));
+					panelFr.add(b);
+					b.setOpaque(true);
+					b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
+					b.setBorderPainted(true);
+					b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
+					b.addActionListener(controller);
+				}
 			}
 			panelFr.setBorder(new EmptyBorder(0, 0, 0, 10));
 			
@@ -173,7 +186,6 @@ public class KalenderPanel extends JPanel{
 
 			add(wochePanel);
 		}
-		
 		revalidate();
 	}
 	public Color gibFarbeFuerDienstplan(int mitarbeiter, int tag, int woche)

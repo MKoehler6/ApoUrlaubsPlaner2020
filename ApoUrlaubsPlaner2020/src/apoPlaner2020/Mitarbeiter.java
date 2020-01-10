@@ -11,6 +11,7 @@ public class Mitarbeiter {
 	ArrayList<Dienstplan> dienstplanArrayList = new ArrayList<>();
 	int urlaubstageAnzahl; 
 	private Tag[][] tageImJahrArray = new Tag[52][5]; // 52 Wochen, 5 Tage	
+	
 	public Mitarbeiter(String name) {
 		this.name = name;
 	}

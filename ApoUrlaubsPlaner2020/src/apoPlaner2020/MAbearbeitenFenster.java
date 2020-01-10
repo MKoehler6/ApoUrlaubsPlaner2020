@@ -24,6 +24,7 @@ public class MAbearbeitenFenster extends JFrame {
 	Mitarbeiter mitarbeiter;
 	String mitarbeiterName;
 	Controller controller;
+	DataModel dataModel;
 	String[] tageString = {"Mo","Di","Mi","Do","Fr"};
 	String[] vormNachmString = {"vorm","nachm"};
 	String[] geradeUngeradeString = {"gerade","ungerade"};
@@ -32,13 +33,11 @@ public class MAbearbeitenFenster extends JFrame {
 	boolean dienstplanGeaendert = false;
 	DefaultComboBoxModel<String> model;
 	JComboBox<String> comboBox;
-	ArrayList<Mitarbeiter> mitarbeiterArrayList;
 	
-	public MAbearbeitenFenster(ArrayList<Mitarbeiter> mitarbeiterArrayList, Controller controller) {
+	public MAbearbeitenFenster(DataModel dataModel, Controller controller) {
 		super("Mitarbeiter bearbeiten");
-		this.mitarbeiterArrayList = mitarbeiterArrayList;
+		this.dataModel = dataModel;
 		this.controller = controller;
-		mitarbeiter = mitarbeiterArrayList.get(0);
 		
 		JPanel panelNorth = new JPanel();
 		JPanel panelSouth = new JPanel();
@@ -59,8 +58,8 @@ public class MAbearbeitenFenster extends JFrame {
 //		***************************************************************************************
 		JPanel panelComboBox = new JPanel();
 		model = new DefaultComboBoxModel<String>();
-		for (int i = 0; i < mitarbeiterArrayList.size(); i++) {
-			model.addElement(mitarbeiterArrayList.get(i).getName());
+		for (Mitarbeiter ma : dataModel.getMitarbeiterArrayList()) {
+			model.addElement(ma.getName());
 		}
         comboBox = new JComboBox<String>(model);
         comboBox.addActionListener(new ActionListener() {
@@ -243,7 +242,7 @@ public class MAbearbeitenFenster extends JFrame {
 				if (textField.getText().length() != 0) {
 					mitarbeiterName = textField.getText();
 					mitarbeiter = new Mitarbeiter(mitarbeiterName);
-					mitarbeiterArrayList.add(mitarbeiter);
+					dataModel.addMitarbeiter(mitarbeiter);
 					deselectAllRadioButtons();
 					speicherRadioButtonsInNeuemDienstplan();
 					model.addElement(mitarbeiter.getName());

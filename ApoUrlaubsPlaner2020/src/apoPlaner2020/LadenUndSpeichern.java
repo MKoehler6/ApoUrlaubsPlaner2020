@@ -21,21 +21,47 @@ public class LadenUndSpeichern {
 	public void speichereDaten() {
 		outputFile = new File(pfad);
 		try (FileOutputStream fileOutputStream = new FileOutputStream(outputFile)) {
+//			Jahr speichern
 			fileOutputStream.write(dataModel.getJahr());
+//			Ferien speichern
 			for (int woche = 0; woche < 52; woche++) {
 				fileOutputStream.write(dataModel.getFerienInWocheX(woche));
 			}
-			int anzahlMA = 2;
+			int anzahlMA = dataModel.getMitarbeiterArrayList().size();
 			fileOutputStream.write(anzahlMA);
-			String[] namen = {"Schmidt","Mähler"};
-			for (int i = 0; i < anzahlMA; i++) {
+			for (Mitarbeiter ma : dataModel.getMitarbeiterArrayList()) {
 //				Namen speichern
-				String name = namen[i];
-				for (int j = 0; j < 20; j++) {
-					if (j < name.length()) {
-						fileOutputStream.write(name.charAt(j));
+				String name = ma.getName();
+				for (int i = 0; i < 20; i++) {
+					if (i < name.length()) {
+						fileOutputStream.write(name.charAt(i));
 					} else {
 						fileOutputStream.write(0);
+					}
+				}
+//				Urlaubstage speichern
+				for (int woche = 0; woche < 52; woche++) {
+					for (int tag = 0; tag < 5; tag++) {
+						if (ma.getTag(woche, tag).isUrlaub()) {
+							fileOutputStream.write(1);
+						} else {
+							fileOutputStream.write(0);
+						}
+					}
+				}
+//				Dienstplaene speichern
+				int anzahlDienstplaene = ma.dienstplanArrayList.size();
+				fileOutputStream.write(anzahlDienstplaene);
+				for (Dienstplan dienstplan : ma.dienstplanArrayList) {
+					for (int tag = 0; tag < 5; tag++) {
+						for (int vormNachm = 0; vormNachm < 2; vormNachm++) {
+							fileOutputStream.write(dienstplan.getGeradeWoche()[tag][vormNachm]);
+						}
+					}
+					for (int tag = 0; tag < 5; tag++) {
+						for (int vormNachm = 0; vormNachm < 2; vormNachm++) {
+							fileOutputStream.write(dienstplan.getUngeradeWoche()[tag][vormNachm]);
+						}
 					}
 				}
 			}
@@ -67,11 +93,32 @@ public class LadenUndSpeichern {
 					}
 					Mitarbeiter ma = new Mitarbeiter(name);
 					dataModel.addMitarbeiter(ma);
-					befuelleTageImJahrArray(ma);
-					System.out.println(name);
+//					Tage erstellen und Urlaub laden und im Tag speichern
+					for (int woche = 0; woche < 52; woche++) {
+						for (int tag = 0; tag < 5; tag++) {
+							ma.setTag(woche, tag, fileInputStream.read() == 1);
+						}
+					}
+//					Dienstplaene laden
+					int anzahlDienstplaene = fileInputStream.read();
+					for (int d = 0; d < anzahlDienstplaene; d++) 
+					{
+						Dienstplan dienstplan= new Dienstplan();
+						for (int tag = 0; tag < 5; tag++) {
+							for (int vormNachm = 0; vormNachm < 2; vormNachm++) {
+								dienstplan.getGeradeWoche()[tag][vormNachm] =
+										fileInputStream.read();
+							}
+						}
+						for (int tag = 0; tag < 5; tag++) {
+							for (int vormNachm = 0; vormNachm < 2; vormNachm++) {
+								dienstplan.getUngeradeWoche()[tag][vormNachm] =
+										fileInputStream.read();
+							}
+						}
+						ma.addDienstplan(dienstplan);
+					}
 				}
-				
-				
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
