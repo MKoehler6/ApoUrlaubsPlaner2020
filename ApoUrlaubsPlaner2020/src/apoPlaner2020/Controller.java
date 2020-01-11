@@ -29,7 +29,6 @@ public class Controller extends WindowAdapter implements ActionListener {
 		hauptfenster.setController(this);
 		hauptfenster.fenster.addWindowListener(this);
 		kalenderPanel.refresh();
-//		hauptfenster.baueFensterNeu();
 		hauptfenster.fenster.setVisible(true);
 	}
 
@@ -67,7 +66,6 @@ public class Controller extends WindowAdapter implements ActionListener {
 	
 	public void updateView() {
 		kalenderPanel.refresh();
-//		hauptfenster.konsolenAusgabe();
 	}
 
 }

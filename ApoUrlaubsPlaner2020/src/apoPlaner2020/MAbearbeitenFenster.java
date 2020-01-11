@@ -70,7 +70,7 @@ public class MAbearbeitenFenster extends JFrame {
 					speicherRadioButtonsInNeuemDienstplan();
 					dienstplanGeaendert = false;
 				}
-				mitarbeiter = mitarbeiterArrayList.get(comboBox.getSelectedIndex());
+				mitarbeiter = dataModel.getMitarbeiterArrayList().get(comboBox.getSelectedIndex());
 				setzeRadioButtonsNeu();
 			}
 		});
@@ -130,7 +130,9 @@ public class MAbearbeitenFenster extends JFrame {
 			}
 		}
 		
-		setzeRadioButtonsNeu();
+		if (mitarbeiter != null) {
+			setzeRadioButtonsNeu(); // Dienstplan des ausgewählten MA wird auf die RadioButtons übertragen
+		}
 		
 		panelDienstplan.add(panelGeradevormittag);
 		panelDienstplan.add(panelGeradenachmittag);
@@ -182,27 +184,27 @@ public class MAbearbeitenFenster extends JFrame {
 	}
 	
 	public void setzeRadioButtonsNeu() {
-//		for (int tag = 0; tag < 5; tag++) {
-//			for (int vormNachm = 0; vormNachm < 2; vormNachm++) {
-//				if (mitarbeiter.dienstplanArrayList
-//						.get(mitarbeiter.dienstplanArrayList.size()-1).getGeradeWoche()[tag][vormNachm] == 1)
-//					radioButtons[tag][vormNachm][0].setSelected(true);
-//				else radioButtons[tag][vormNachm][0].setSelected(false);
-//			}
-//		}
-//		for (int tag = 0; tag < 5; tag++) {
-//			for (int vormNachm = 0; vormNachm < 2; vormNachm++) {
-//				if (mitarbeiter.dienstplanArrayList
-//						.get(mitarbeiter.dienstplanArrayList.size()-1).getUngeradeWoche()[tag][vormNachm] == 1)
-//					radioButtons[tag][vormNachm][1].setSelected(true);
-//				else radioButtons[tag][vormNachm][1].setSelected(false);
-//			}
-//		}
+		for (int tag = 0; tag < 5; tag++) {
+			for (int vormNachm = 0; vormNachm < 2; vormNachm++) {
+				if (mitarbeiter.dienstplanArrayList
+						.get(mitarbeiter.dienstplanArrayList.size()-1).getGeradeWoche()[tag][vormNachm] == 1)
+					radioButtons[tag][vormNachm][0].setSelected(true);
+				else radioButtons[tag][vormNachm][0].setSelected(false);
+			}
+		}
+		for (int tag = 0; tag < 5; tag++) {
+			for (int vormNachm = 0; vormNachm < 2; vormNachm++) {
+				if (mitarbeiter.dienstplanArrayList
+						.get(mitarbeiter.dienstplanArrayList.size()-1).getUngeradeWoche()[tag][vormNachm] == 1)
+					radioButtons[tag][vormNachm][1].setSelected(true);
+				else radioButtons[tag][vormNachm][1].setSelected(false);
+			}
+		}
 	}
 	
 	public void speicherRadioButtonsInNeuemDienstplan() {
 		Dienstplan dienstplan  = new Dienstplan();
-		mitarbeiter.dienstplanArrayList.add(dienstplan);
+		mitarbeiter.addDienstplan(dienstplan);
 		for (int tag = 0; tag < 5; tag++) {
 			for (int vormNachm = 0; vormNachm < 2; vormNachm++) {
 				if (radioButtons[tag][vormNachm][0].isSelected())
@@ -242,6 +244,7 @@ public class MAbearbeitenFenster extends JFrame {
 				if (textField.getText().length() != 0) {
 					mitarbeiterName = textField.getText();
 					mitarbeiter = new Mitarbeiter(mitarbeiterName);
+					mitarbeiter.setAlleTageInArrayNeu();
 					dataModel.addMitarbeiter(mitarbeiter);
 					deselectAllRadioButtons();
 					speicherRadioButtonsInNeuemDienstplan();

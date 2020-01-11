@@ -26,6 +26,17 @@ public class Dienstplan {
 		this.ungeradeWoche = ungeradeWoche;
 	}
 	
+	public void kontrollausgabe() {
+		System.out.println("gerade");
+		for (int i = 0; i <5; i++) {
+			System.out.println(geradeWoche[i][0] + " " + geradeWoche[i][1]);
+		}
+		System.out.println("ungerade");
+		for (int i = 0; i <5; i++) {
+			System.out.println(ungeradeWoche[i][0] + " " + ungeradeWoche[i][1]);
+		}
+	}
+	
 	
 
 }

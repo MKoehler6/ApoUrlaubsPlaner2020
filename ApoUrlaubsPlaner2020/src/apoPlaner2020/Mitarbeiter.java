@@ -2,6 +2,8 @@ package apoPlaner2020;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.swing.JButton;
 
@@ -43,6 +45,24 @@ public class Mitarbeiter {
 			}
 		}
 		return zaehler;
+	}
+	
+	public void setAlleTageInArrayNeu() {
+		for (int woche = 0; woche < 52; woche++) {
+			for (int tag = 0; tag < 5; tag++) {
+				setTag(woche, tag, false);
+			}
+		}
+	}
+	
+	public Dienstplan getDienstplan(int woche) {
+		for (int i = dienstplanArrayList.size()-1; i >= 0; i--) {
+			if (woche >= dienstplanArrayList.get(i).getGueltigAb()) {
+				return dienstplanArrayList.get(i);
+			}
+		}
+		
+		return dienstplanArrayList.get(dienstplanArrayList.size()-1);
 	}
 
 }

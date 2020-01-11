@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 public class KalenderPanel extends JPanel{
@@ -27,8 +28,6 @@ public class KalenderPanel extends JPanel{
 	JPanel panelDo = new JPanel(new GridLayout(0,2));
 	JPanel panelFr = new JPanel(new GridLayout(0,2));
 	JPanel wochePanel = new JPanel(new GridLayout(1,6));
-	JPanel main = new JPanel(new BorderLayout());
-	JFrame fenster = new JFrame("Apotheken Urlaubsplaner");
 	Datum datum;
 
 	public KalenderPanel(DataModel dataModel) {
@@ -44,6 +43,13 @@ public class KalenderPanel extends JPanel{
 	
 	public void refresh() {
 		removeAll();
+		panelMA.removeAll();
+		panelMo.removeAll();
+		panelDi.removeAll();
+		panelMi.removeAll();
+		panelDo.removeAll();
+		panelFr.removeAll();
+		wochePanel.removeAll();
 		
 		for (int woche = 1; woche <= 52; woche++)
 		{
@@ -72,13 +78,13 @@ public class KalenderPanel extends JPanel{
 			panelMo.add(new JLabel("vormittag"));
 			panelMo.add(new JLabel("nachmittag"));
 	//		https://stackoverflow.com/questions/5654208/making-a-jbutton-invisible-but-clickable
-			for (int i = 0; i < mitarbeiterArrayList.size(); i++)
+			for (Mitarbeiter mitarbeiter : mitarbeiterArrayList)
 			{
 				for (int j = 0; j < 2; j++) {
-					JButton b = new KalenderButton(woche, 0, j, mitarbeiterArrayList.get(i));
+					JButton b = new KalenderButton(woche, 0, j, mitarbeiter);
 					panelMo.add(b);
 					b.setOpaque(true);
-					b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
+					b.setBackground(gibFarbeFuerDienstplan(woche, 0, j, mitarbeiter));
 					b.setBorderPainted(true);
 					b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
 					b.addActionListener(controller);
@@ -94,13 +100,13 @@ public class KalenderPanel extends JPanel{
 			panelDi.add(new JLabel("vormittag"));
 			panelDi.add(new JLabel("nachmittag"));
 	//		https://stackoverflow.com/questions/5654208/making-a-jbutton-invisible-but-clickable
-			for (int i = 0; i < mitarbeiterArrayList.size(); i++)
+			for (Mitarbeiter mitarbeiter : mitarbeiterArrayList)
 			{
 				for (int j = 0; j < 2; j++) {
-					JButton b = new KalenderButton(woche, 1, j, mitarbeiterArrayList.get(i));
+					JButton b = new KalenderButton(woche, 1, j, mitarbeiter);
 					panelDi.add(b);
 					b.setOpaque(true);
-					b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
+					b.setBackground(gibFarbeFuerDienstplan(woche, 1, j, mitarbeiter));
 					b.setBorderPainted(true);
 					b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
 					b.addActionListener(controller);
@@ -116,14 +122,14 @@ public class KalenderPanel extends JPanel{
 			panelMi.add(new JLabel("vormittag"));
 			panelMi.add(new JLabel("nachmittag"));
 	//		https://stackoverflow.com/questions/5654208/making-a-jbutton-invisible-but-clickable
-			for (int i = 0; i < mitarbeiterArrayList.size(); i++)
+			for (Mitarbeiter mitarbeiter : mitarbeiterArrayList)
 			{
 				for (int j = 0; j < 2; j++) 
 				{
-					JButton b = new KalenderButton(woche, 2, j, mitarbeiterArrayList.get(i));
+					JButton b = new KalenderButton(woche, 2, j, mitarbeiter);
 					panelMi.add(b);
 					b.setOpaque(true);
-					b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
+					b.setBackground(gibFarbeFuerDienstplan(woche, 2, j, mitarbeiter));
 					b.setBorderPainted(true);
 					b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
 					b.addActionListener(controller);
@@ -139,14 +145,14 @@ public class KalenderPanel extends JPanel{
 			panelDo.add(new JLabel("vormittag"));
 			panelDo.add(new JLabel("nachmittag"));
 			//		https://stackoverflow.com/questions/5654208/making-a-jbutton-invisible-but-clickable
-			for (int i = 0; i < mitarbeiterArrayList.size(); i++)
+			for (Mitarbeiter mitarbeiter : mitarbeiterArrayList)
 			{
 				for (int j = 0; j < 2; j++) 
 				{
-					JButton b = new KalenderButton(woche, 3, j, mitarbeiterArrayList.get(i));
+					JButton b = new KalenderButton(woche, 3, j, mitarbeiter);
 					panelDo.add(b);
 					b.setOpaque(true);
-					b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
+					b.setBackground(gibFarbeFuerDienstplan(woche, 3, j, mitarbeiter));
 					b.setBorderPainted(true);
 					b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
 					b.addActionListener(controller);
@@ -162,14 +168,14 @@ public class KalenderPanel extends JPanel{
 			panelFr.add(new JLabel("vormittag"));
 			panelFr.add(new JLabel("nachmittag"));
 			//		https://stackoverflow.com/questions/5654208/making-a-jbutton-invisible-but-clickable
-			for (int i = 0; i < mitarbeiterArrayList.size(); i++)
+			for (Mitarbeiter mitarbeiter : mitarbeiterArrayList)
 			{
 				for (int j = 0; j < 2; j++) 
 				{
-					JButton b = new KalenderButton(woche, 4, j, mitarbeiterArrayList.get(i));
+					JButton b = new KalenderButton(woche, 4, j, mitarbeiter);
 					panelFr.add(b);
 					b.setOpaque(true);
-					b.setBackground(gibFarbeFuerDienstplan(0, 0, woche));
+					b.setBackground(gibFarbeFuerDienstplan(woche, 4, j, mitarbeiter));
 					b.setBorderPainted(true);
 					b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
 					b.addActionListener(controller);
@@ -188,17 +194,19 @@ public class KalenderPanel extends JPanel{
 		}
 		revalidate();
 	}
-	public Color gibFarbeFuerDienstplan(int mitarbeiter, int tag, int woche)
+	public Color gibFarbeFuerDienstplan(int woche, int tag, int vormNachm, Mitarbeiter mitarbeiter)
 	{
-//		int geradeUngerade = woche%2;
-//		if (dienstplan[mitarbeiter/2][geradeUngerade][tag][mitarbeiter%2] == 1)
-//		{
-//			return new Color(80, 150, 230); //blau
-//		}
-//		if (dienstplan[mitarbeiter/2][geradeUngerade][tag][mitarbeiter%2] == 0)
-//		{
-//			return new Color(255, 255, 255);
-//		}
+		if(woche%2 == 0) {
+			if (mitarbeiter.getDienstplan(woche).getGeradeWoche()[tag][vormNachm] == 1)
+			{
+				return new Color(80, 150, 230); //blau
+			}
+		} else {
+			if (mitarbeiter.getDienstplan(woche).getUngeradeWoche()[tag][vormNachm] == 1)
+			{
+				return new Color(80, 150, 230); //blau
+			}
+		}
 		return new Color(255, 255, 255);
 	}
 

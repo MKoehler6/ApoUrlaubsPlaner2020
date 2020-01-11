@@ -14,6 +14,7 @@ public class Hauptfenster extends JPanel {
 	private ArrayList<Mitarbeiter> mitarbeiterArrayList;
 	JPanel menu;
 	JPanel main;
+	JScrollPane scrollPane;
 	JFrame fenster = new JFrame("Apotheken Urlaubsplaner");
 	JButton test;
 	Datum datum;
@@ -40,7 +41,7 @@ public class Hauptfenster extends JPanel {
 	public void baueFensterNeu() 
 	{
 		main = new JPanel(new BorderLayout());
-		JScrollPane scrollPane = new JScrollPane(kalenderPanel);
+		scrollPane = new JScrollPane(kalenderPanel);
 		menu = new JPanel(new GridLayout(9,1));
 		// Menuebereich
 		JLabel menuLabel = new JLabel("Menü", JLabel.CENTER);
