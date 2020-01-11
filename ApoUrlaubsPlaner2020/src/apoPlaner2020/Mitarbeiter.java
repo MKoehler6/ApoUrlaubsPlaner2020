@@ -13,6 +13,7 @@ public class Mitarbeiter {
 	ArrayList<Dienstplan> dienstplanArrayList = new ArrayList<>();
 	int urlaubstageAnzahl; 
 	private Tag[][] tageImJahrArray = new Tag[52][5]; // 52 Wochen, 5 Tage	
+	private KalenderButton[][][] kalenderButtonArray = new KalenderButton[52][5][2];
 	
 	public Mitarbeiter(String name) {
 		this.name = name;
@@ -63,6 +64,13 @@ public class Mitarbeiter {
 		}
 		
 		return dienstplanArrayList.get(dienstplanArrayList.size()-1);
+	}
+	
+	public void addKalenderButton (KalenderButton kalenderButton, int woche, int tag, int vormNachm) {
+		kalenderButtonArray[woche-1][tag][vormNachm] = kalenderButton;
+	}
+	public KalenderButton getKalenderButton(int woche, int tag, int vormNachm) {
+		return kalenderButtonArray[woche-1][tag][vormNachm];
 	}
 
 }

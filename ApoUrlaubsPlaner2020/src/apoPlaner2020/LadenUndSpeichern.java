@@ -126,14 +126,4 @@ public class LadenUndSpeichern {
 			}
 		}
 	}
-	
-	private void befuelleTageImJahrArray(Mitarbeiter mitarbeiter) {
-		for (int woche = 0; woche < 52; woche++) {
-			for (int tag = 0; tag < 5; tag++) {
-//				TODO Daten vom Stream
-				mitarbeiter.setTag(woche, tag, false);
-			}
-			
-		}
-	}
 }

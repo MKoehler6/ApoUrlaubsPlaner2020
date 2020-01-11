@@ -18,6 +18,14 @@ import javax.swing.border.EmptyBorder;
 
 public class KalenderPanel extends JPanel{
 	
+	private final int MONTAG = 0;
+	private final int DIENSTAG = 1;
+	private final int MITTWOCH = 2;
+	private final int DONNERSTAG = 3;
+	private final int FREITAG = 4;
+	private final Color ROT = new Color(255,69,0);
+	private final Color BLAU = new Color(80, 150, 230);
+	private final Color WEISS = new Color(255,255,255);
 	private DataModel dataModel;
 	private Controller controller;
 	private ArrayList<Mitarbeiter> mitarbeiterArrayList;
@@ -81,10 +89,11 @@ public class KalenderPanel extends JPanel{
 			for (Mitarbeiter mitarbeiter : mitarbeiterArrayList)
 			{
 				for (int j = 0; j < 2; j++) {
-					JButton b = new KalenderButton(woche, 0, j, mitarbeiter);
+					KalenderButton b = new KalenderButton(woche, MONTAG, j, mitarbeiter);
 					panelMo.add(b);
+					mitarbeiter.addKalenderButton(b, woche, MONTAG, j);
 					b.setOpaque(true);
-					b.setBackground(gibFarbeFuerDienstplan(woche, 0, j, mitarbeiter));
+					b.setBackground(gibFarbeFuerDienstplan(woche, MONTAG, j, mitarbeiter));
 					b.setBorderPainted(true);
 					b.setRolloverEnabled(false); // wenn Maus drÃ¼berfÃ¤hrt keine Hervorhebung
 					b.addActionListener(controller);
@@ -196,18 +205,19 @@ public class KalenderPanel extends JPanel{
 	}
 	public Color gibFarbeFuerDienstplan(int woche, int tag, int vormNachm, Mitarbeiter mitarbeiter)
 	{
+		if (mitarbeiter.getTag(woche-1, tag).isUrlaub()) {
+			return ROT;
+		}
 		if(woche%2 == 0) {
-			if (mitarbeiter.getDienstplan(woche).getGeradeWoche()[tag][vormNachm] == 1)
-			{
-				return new Color(80, 150, 230); //blau
+			if (mitarbeiter.getDienstplan(woche).getGeradeWoche()[tag][vormNachm] == 1) {
+				return BLAU;
 			}
 		} else {
-			if (mitarbeiter.getDienstplan(woche).getUngeradeWoche()[tag][vormNachm] == 1)
-			{
-				return new Color(80, 150, 230); //blau
+			if (mitarbeiter.getDienstplan(woche).getUngeradeWoche()[tag][vormNachm] == 1) {
+				return BLAU;
 			}
 		}
-		return new Color(255, 255, 255);
+		return WEISS;
 	}
 
 }

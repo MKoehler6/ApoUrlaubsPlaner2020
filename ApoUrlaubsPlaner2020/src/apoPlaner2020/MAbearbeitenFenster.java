@@ -129,10 +129,10 @@ public class MAbearbeitenFenster extends JFrame {
 				}
 			}
 		}
-		
-		if (mitarbeiter != null) {
-			setzeRadioButtonsNeu(); // Dienstplan des ausgewählten MA wird auf die RadioButtons übertragen
-		}
+		 if (dataModel.getMitarbeiterArrayList().size() != 0) {
+	        	mitarbeiter = dataModel.getMitarbeiterArrayList().get(0);
+	        	setzeRadioButtonsNeu(); // Dienstplan des ausgewählten MA wird auf die RadioButtons übertragen
+	        }
 		
 		panelDienstplan.add(panelGeradevormittag);
 		panelDienstplan.add(panelGeradenachmittag);
