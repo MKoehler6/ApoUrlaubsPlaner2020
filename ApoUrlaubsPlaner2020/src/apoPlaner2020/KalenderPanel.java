@@ -69,8 +69,9 @@ public class KalenderPanel extends JPanel{
 	//		https://stackoverflow.com/questions/5654208/making-a-jbutton-invisible-but-clickable
 			for (Mitarbeiter mitarbeiter : mitarbeiterArrayList)
 			{
-				JButton b = new MAButton(woche, mitarbeiter);
+				MAButton b = new MAButton(woche, mitarbeiter);
 				panelMA.add(b);
+				mitarbeiter.addMAButton(b, woche);
 				b.setOpaque(true);
 				b.setBackground(new Color(255, 255, 255));
 				b.setBorderPainted(true);
@@ -112,8 +113,9 @@ public class KalenderPanel extends JPanel{
 			for (Mitarbeiter mitarbeiter : mitarbeiterArrayList)
 			{
 				for (int j = 0; j < 2; j++) {
-					JButton b = new KalenderButton(woche, 1, j, mitarbeiter);
+					KalenderButton b = new KalenderButton(woche, 1, j, mitarbeiter);
 					panelDi.add(b);
+					mitarbeiter.addKalenderButton(b, woche, DIENSTAG, j);
 					b.setOpaque(true);
 					b.setBackground(gibFarbeFuerDienstplan(woche, 1, j, mitarbeiter));
 					b.setBorderPainted(true);
@@ -135,8 +137,9 @@ public class KalenderPanel extends JPanel{
 			{
 				for (int j = 0; j < 2; j++) 
 				{
-					JButton b = new KalenderButton(woche, 2, j, mitarbeiter);
+					KalenderButton b = new KalenderButton(woche, 2, j, mitarbeiter);
 					panelMi.add(b);
+					mitarbeiter.addKalenderButton(b, woche, MITTWOCH, j);
 					b.setOpaque(true);
 					b.setBackground(gibFarbeFuerDienstplan(woche, 2, j, mitarbeiter));
 					b.setBorderPainted(true);
@@ -158,8 +161,9 @@ public class KalenderPanel extends JPanel{
 			{
 				for (int j = 0; j < 2; j++) 
 				{
-					JButton b = new KalenderButton(woche, 3, j, mitarbeiter);
+					KalenderButton b = new KalenderButton(woche, 3, j, mitarbeiter);
 					panelDo.add(b);
+					mitarbeiter.addKalenderButton(b, woche, DONNERSTAG, j);
 					b.setOpaque(true);
 					b.setBackground(gibFarbeFuerDienstplan(woche, 3, j, mitarbeiter));
 					b.setBorderPainted(true);
@@ -181,8 +185,9 @@ public class KalenderPanel extends JPanel{
 			{
 				for (int j = 0; j < 2; j++) 
 				{
-					JButton b = new KalenderButton(woche, 4, j, mitarbeiter);
+					KalenderButton b = new KalenderButton(woche, 4, j, mitarbeiter);
 					panelFr.add(b);
+					mitarbeiter.addKalenderButton(b, woche, FREITAG, j);
 					b.setOpaque(true);
 					b.setBackground(gibFarbeFuerDienstplan(woche, 4, j, mitarbeiter));
 					b.setBorderPainted(true);

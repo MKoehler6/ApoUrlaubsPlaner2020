@@ -14,6 +14,7 @@ public class Mitarbeiter {
 	int urlaubstageAnzahl; 
 	private Tag[][] tageImJahrArray = new Tag[52][5]; // 52 Wochen, 5 Tage	
 	private KalenderButton[][][] kalenderButtonArray = new KalenderButton[52][5][2];
+	private MAButton[] maButtonArray = new MAButton[52];
 	
 	public Mitarbeiter(String name) {
 		this.name = name;
@@ -32,6 +33,14 @@ public class Mitarbeiter {
 		t.setUrlaub(isUrlaub);
 		tageImJahrArray[woche][tag] = t;
 //		TODO Dienst vormittag und nachmittag einfügen
+	}
+	
+	public void setTagUrlaub(int woche, int tag) {
+		tageImJahrArray[woche-1][tag].setUrlaub(true);
+	}
+	
+	public void setTagDienst(int woche, int tag) {
+		tageImJahrArray[woche-1][tag].setUrlaub(false);
 	}
 	
 	public void addDienstplan(Dienstplan dienstplan) {
@@ -71,6 +80,12 @@ public class Mitarbeiter {
 	}
 	public KalenderButton getKalenderButton(int woche, int tag, int vormNachm) {
 		return kalenderButtonArray[woche-1][tag][vormNachm];
+	}
+	public void addMAButton (MAButton maButton, int woche) {
+		maButtonArray[woche-1] = maButton;
+	}
+	public MAButton getMAButton(int woche) {
+		return maButtonArray[woche-1];
 	}
 
 }

@@ -45,18 +45,28 @@ public class Controller extends WindowAdapter implements ActionListener {
 		if (buttonClicked instanceof MAButton) {
 			woche = ((MAButton) buttonClicked).getWoche();
 			mitarbeiter = ((MAButton) buttonClicked).getMitarbeiter();
-			System.out.println(woche + " " + mitarbeiter.getName());
+			int zaehlerUrlaubstageInWoche = 0;
+			for (int tag = 0; tag < 5; tag++) {
+				if (mitarbeiter.getTag(woche-1, tag).isUrlaub()) zaehlerUrlaubstageInWoche++;
+			}
+			if (zaehlerUrlaubstageInWoche < 5) {
+				setzeWocheUrlaub(mitarbeiter, woche);
+				aktualisiereUrlaubAufMAButtons();
+			} else {
+				setzeWocheDienst(mitarbeiter, woche);
+				aktualisiereUrlaubAufMAButtons();
+			}
 		} else if (buttonClicked instanceof KalenderButton) {
 			woche = ((KalenderButton) buttonClicked).getWoche();
 			tag = ((KalenderButton) buttonClicked).getTag();
 			vormNachm = ((KalenderButton) buttonClicked).getVormNachm();
 			mitarbeiter = ((KalenderButton) buttonClicked).getMitarbeiter();
 			if (mitarbeiter.getTag(woche-1, tag).isUrlaub()) {
-				mitarbeiter.getTag(woche-1, tag).setUrlaub(false);
 				setzeTagDienst(mitarbeiter, woche, tag);
+				aktualisiereUrlaubAufMAButtons();
 			} else { 
-				mitarbeiter.getTag(woche-1, tag).setUrlaub(true);
 				setzeTagUrlaub(mitarbeiter, woche, tag);
+				aktualisiereUrlaubAufMAButtons();
 			}
 		}
 	}
@@ -64,10 +74,37 @@ public class Controller extends WindowAdapter implements ActionListener {
 	private void setzeTagUrlaub(Mitarbeiter mitarbeiter, int woche, int tag) {
 		mitarbeiter.getKalenderButton(woche, tag, VORM).setBackground(ROT);
 		mitarbeiter.getKalenderButton(woche, tag, NACHM).setBackground(ROT);
+		mitarbeiter.setTagUrlaub(woche, tag);
 	}
 	private void setzeTagDienst(Mitarbeiter mitarbeiter, int woche, int tag) {
 		mitarbeiter.getKalenderButton(woche, tag, VORM).setBackground(gibFarbeFuerDienstplan(woche, tag, VORM, mitarbeiter));
 		mitarbeiter.getKalenderButton(woche, tag, NACHM).setBackground(gibFarbeFuerDienstplan(woche, tag, NACHM, mitarbeiter));
+		mitarbeiter.setTagDienst(woche, tag);
+	}
+	private void setzeWocheUrlaub(Mitarbeiter mitarbeiter, int woche) {
+		for (int tag = 0; tag < 5; tag++) {
+			if (!mitarbeiter.getTag(woche-1, tag).isUrlaub()) {
+				mitarbeiter.getKalenderButton(woche, tag, VORM).setBackground(ROT);
+				mitarbeiter.getKalenderButton(woche, tag, NACHM).setBackground(ROT);
+				mitarbeiter.setTagUrlaub(woche, tag);
+			}
+		}
+	}
+	private void setzeWocheDienst(Mitarbeiter mitarbeiter, int woche) {
+		for (int tag = 0; tag < 5; tag++) {
+			if (mitarbeiter.getTag(woche-1, tag).isUrlaub()) {
+				mitarbeiter.getKalenderButton(woche, tag, VORM).setBackground(gibFarbeFuerDienstplan(woche, tag, VORM, mitarbeiter));
+				mitarbeiter.getKalenderButton(woche, tag, NACHM).setBackground(gibFarbeFuerDienstplan(woche, tag, NACHM, mitarbeiter));
+				mitarbeiter.setTagDienst(woche, tag);
+			}
+		}
+	}
+	public void aktualisiereUrlaubAufMAButtons() {
+		for (Mitarbeiter mitarbeiter : dataModel.getMitarbeiterArrayList()) {
+			for (int woche = 1; woche <= 52; woche++) {
+				mitarbeiter.getMAButton(woche).setTageUrlaubAufButton();
+			}
+		}
 	}
 	public Color gibFarbeFuerDienstplan(int woche, int tag, int vormNachm, Mitarbeiter mitarbeiter)
 	{
