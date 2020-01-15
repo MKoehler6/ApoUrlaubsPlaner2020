@@ -125,7 +125,6 @@ public class Controller extends WindowAdapter implements ActionListener {
 	{
 		ladenUndSpeichern.speichereDaten();
 //		speichern.speichereJPG();
-		System.out.println("Tschüs");
 		System.exit(0);
 	}
 	

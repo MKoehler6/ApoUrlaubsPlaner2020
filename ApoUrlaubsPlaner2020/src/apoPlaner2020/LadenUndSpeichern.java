@@ -53,6 +53,7 @@ public class LadenUndSpeichern {
 				int anzahlDienstplaene = ma.dienstplanArrayList.size();
 				fileOutputStream.write(anzahlDienstplaene);
 				for (Dienstplan dienstplan : ma.dienstplanArrayList) {
+					fileOutputStream.write(dienstplan.getGueltigAb());
 					for (int tag = 0; tag < 5; tag++) {
 						for (int vormNachm = 0; vormNachm < 2; vormNachm++) {
 							fileOutputStream.write(dienstplan.getGeradeWoche()[tag][vormNachm]);
@@ -75,7 +76,6 @@ public class LadenUndSpeichern {
 	public void ladeDaten() {
 		inputFile = new File(pfad);
 		if (inputFile.exists()) {
-			System.out.println("Lade Daten");
 			try (FileInputStream fileInputStream = new FileInputStream(inputFile)) {
 				dataModel.setJahr(fileInputStream.read());
 				for (int woche = 0; woche < 52; woche++) {
@@ -104,6 +104,7 @@ public class LadenUndSpeichern {
 					for (int d = 0; d < anzahlDienstplaene; d++) 
 					{
 						Dienstplan dienstplan= new Dienstplan();
+						dienstplan.setGueltigAb(fileInputStream.read());
 						for (int tag = 0; tag < 5; tag++) {
 							for (int vormNachm = 0; vormNachm < 2; vormNachm++) {
 								dienstplan.getGeradeWoche()[tag][vormNachm] =

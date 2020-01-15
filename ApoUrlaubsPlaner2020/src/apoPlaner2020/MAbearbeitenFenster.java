@@ -46,7 +46,7 @@ public class MAbearbeitenFenster extends JFrame {
 		
 		setSize(600, 600);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLayout(new GridLayout(2,0));
 		
 		JLabel labelLeer = new JLabel(" ");

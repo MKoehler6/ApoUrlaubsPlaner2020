@@ -81,7 +81,7 @@ public class KalenderPanel extends JPanel{
 			
 			panelMo.add(new JLabel("MONTAG"));
 			JLabel datumLabelMontag = new JLabel(" " + datum.gibMontagVonWocheX(woche));
-			if (datum.ferien[woche - 1] == 1) datumLabelMontag.setBackground(new Color(179,238,58));
+			if (dataModel.getFerienInWocheX(woche-1) == 1) datumLabelMontag.setBackground(new Color(179,238,58));
 			datumLabelMontag.setOpaque(true);
 			panelMo.add(datumLabelMontag);
 			panelMo.add(new JLabel("vormittag"));
@@ -104,7 +104,7 @@ public class KalenderPanel extends JPanel{
 			
 			panelDi.add(new JLabel("DIENSTAG"));
 			JLabel datumLabelDienstag = new JLabel(" " + datum.gibDienstagVonWocheX(woche));
-			if (datum.ferien[woche - 1] == 1) datumLabelDienstag.setBackground(new Color(179,238,58));
+			if (dataModel.getFerienInWocheX(woche-1) == 1) datumLabelDienstag.setBackground(new Color(179,238,58));
 			datumLabelDienstag.setOpaque(true);
 			panelDi.add(datumLabelDienstag);
 			panelDi.add(new JLabel("vormittag"));
@@ -127,7 +127,7 @@ public class KalenderPanel extends JPanel{
 			
 			panelMi.add(new JLabel("MITTWOCH"));
 			JLabel datumLabelMittwoch = new JLabel(" " + datum.gibMittwochVonWocheX(woche));
-			if (datum.ferien[woche - 1] == 1) datumLabelMittwoch.setBackground(new Color(179,238,58));
+			if (dataModel.getFerienInWocheX(woche-1) == 1) datumLabelMittwoch.setBackground(new Color(179,238,58));
 			datumLabelMittwoch.setOpaque(true);
 			panelMi.add(datumLabelMittwoch);
 			panelMi.add(new JLabel("vormittag"));
@@ -151,7 +151,7 @@ public class KalenderPanel extends JPanel{
 			
 			panelDo.add(new JLabel("DONNERSTAG"));
 			JLabel datumLabelDonnerstag = new JLabel(" " + datum.gibDonnerstagVonWocheX(woche));
-			if (datum.ferien[woche - 1] == 1) datumLabelDonnerstag.setBackground(new Color(179,238,58));
+			if (dataModel.getFerienInWocheX(woche-1) == 1) datumLabelDonnerstag.setBackground(new Color(179,238,58));
 			datumLabelDonnerstag.setOpaque(true);
 			panelDo.add(datumLabelDonnerstag);
 			panelDo.add(new JLabel("vormittag"));
@@ -175,7 +175,7 @@ public class KalenderPanel extends JPanel{
 			
 			panelFr.add(new JLabel("FREITAG"));
 			JLabel datumLabelFreitag = new JLabel(" " + datum.gibFreitagVonWocheX(woche));
-			if (datum.ferien[woche - 1] == 1) datumLabelFreitag.setBackground(new Color(179,238,58));
+			if (dataModel.getFerienInWocheX(woche-1) == 1) datumLabelFreitag.setBackground(new Color(179,238,58));
 			datumLabelFreitag.setOpaque(true);
 			panelFr.add(datumLabelFreitag);
 			panelFr.add(new JLabel("vormittag"));

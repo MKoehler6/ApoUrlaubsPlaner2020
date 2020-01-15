@@ -61,11 +61,18 @@ public class Hauptfenster extends JPanel {
 			}
 		});
 		menu.add(maBearbeitenButton);
-		JButton dienstplanButton = new JButton("Dienstplan bearbeiten");
-		dienstplanButton.setOpaque(true);
-		dienstplanButton.setBackground(new Color(120,210,85));
-		dienstplanButton.setBorderPainted(true);
-		menu.add(dienstplanButton);
+		JButton ferienEingeben = new JButton("Ferien eingeben");
+		ferienEingeben.setOpaque(true);
+		ferienEingeben.setBackground(new Color(120,210,85));
+		ferienEingeben.setBorderPainted(true);
+		ferienEingeben.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new FerienEingebenFenster(dataModel, controller);
+			}
+		});
+		menu.add(ferienEingeben);
 		main.add(menu, BorderLayout.WEST);
 		main.add(scrollPane, BorderLayout.CENTER);
 		fenster.add(main);
