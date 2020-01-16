@@ -41,7 +41,6 @@ public class KalenderPanel extends JPanel{
 	public KalenderPanel(DataModel dataModel) {
 		this.dataModel = dataModel;
 		this.mitarbeiterArrayList = dataModel.getMitarbeiterArrayList();
-		datum = new Datum();
 		setLayout(new GridLayout(0,1)); 
 	}
 	
@@ -50,6 +49,7 @@ public class KalenderPanel extends JPanel{
 	}
 	
 	public void refresh() {
+		datum = new Datum(dataModel);
 		removeAll();
 		panelMA.removeAll();
 		panelMo.removeAll();

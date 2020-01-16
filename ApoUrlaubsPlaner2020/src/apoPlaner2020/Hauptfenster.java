@@ -14,6 +14,7 @@ public class Hauptfenster extends JPanel {
 	private ArrayList<Mitarbeiter> mitarbeiterArrayList;
 	JPanel menu;
 	JPanel main;
+	JLabel jahrLabel;
 	JScrollPane scrollPane;
 	JFrame fenster = new JFrame("Apotheken Urlaubsplaner");
 	JButton test;
@@ -28,7 +29,7 @@ public class Hauptfenster extends JPanel {
 		this.dataModel = dataModel;
 		this.kalenderPanel = kalenderPanel;
 		mitarbeiterArrayList = dataModel.getMitarbeiterArrayList();
-		datum = new Datum();
+		datum = new Datum(dataModel);
 		fenster.setSize(1300, 900);
 		fenster.setLocationRelativeTo(null);
 		baueFensterNeu();
@@ -49,6 +50,13 @@ public class Hauptfenster extends JPanel {
 		menuLabel.setBackground(new Color(190, 190, 190));
 		menuLabel.setFont(new Font("Arial", 1, 14));
 		menu.add(menuLabel);
+		
+		jahrLabel = new JLabel("", JLabel.CENTER);
+		menuLabel.setOpaque(true);
+		menuLabel.setBackground(new Color(190, 190, 190));
+		menuLabel.setFont(new Font("Arial", 1, 14));
+		menu.add(jahrLabel);
+		
 		JButton maBearbeitenButton = new JButton("Mitarbeiter bearbeiten");
 		maBearbeitenButton.setOpaque(true);
 		maBearbeitenButton.setBackground(new Color(120,210,85));
@@ -61,6 +69,7 @@ public class Hauptfenster extends JPanel {
 			}
 		});
 		menu.add(maBearbeitenButton);
+		
 		JButton ferienEingeben = new JButton("Ferien eingeben");
 		ferienEingeben.setOpaque(true);
 		ferienEingeben.setBackground(new Color(120,210,85));
@@ -73,6 +82,19 @@ public class Hauptfenster extends JPanel {
 			}
 		});
 		menu.add(ferienEingeben);
+		
+		JButton jahrEingeben = new JButton("Jahr eingeben");
+		jahrEingeben.setOpaque(true);
+		jahrEingeben.setBackground(new Color(120,210,85));
+		jahrEingeben.setBorderPainted(true);
+		jahrEingeben.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new JahrEingebenFenster(dataModel, controller);
+			}
+		});
+		menu.add(jahrEingeben);
 		main.add(menu, BorderLayout.WEST);
 		main.add(scrollPane, BorderLayout.CENTER);
 		fenster.add(main);
@@ -102,5 +124,5 @@ public class Hauptfenster extends JPanel {
 			System.out.println();
 		}
 	}
-
+	
 }

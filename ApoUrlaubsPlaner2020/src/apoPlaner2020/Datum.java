@@ -7,9 +7,14 @@ import java.time.temporal.IsoFields;
 
 public class Datum {
 	
-	int year = 2020;
+	int year;
 	int week;
-	int[] ferien = {1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1};
+	DataModel dataModel;
+	
+	public Datum(DataModel dataModel) {
+		this.dataModel = dataModel;
+		this.year = dataModel.getJahr() + 2000;
+	}
 	
 	public static LocalDate getTodayDate() {
 		return LocalDate.now();

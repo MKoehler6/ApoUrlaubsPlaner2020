@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -76,6 +77,9 @@ public class MAbearbeitenFenster extends JFrame {
 		});
         panelComboBox.add(comboBox);
         panelNorth.add(panelComboBox);
+        if (dataModel.getMitarbeiterArrayList().size() != 0) {
+	       	mitarbeiter = dataModel.getMitarbeiterArrayList().get(0);
+	    }
 //		***************************************************************************************
 //		Button Neuer Mitarbeiter
 //		***************************************************************************************
@@ -92,7 +96,30 @@ public class MAbearbeitenFenster extends JFrame {
 				mitarbeiterNameEingebenFenster();
 			}
 		});
+//		***************************************************************************************
+//		Button Mitarbeiter löschen
+//		***************************************************************************************
+        JButton buttonMAloeschen = new JButton("Mitarbeiter löschen");
+        buttonMAloeschen.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int result = JOptionPane.showConfirmDialog(null, 
+					      "Mitarbeiter löschen?", 
+					      "Löschen bestätigen", 
+					      JOptionPane.YES_NO_OPTION); 
+
+					      switch(result) { 
+					         case JOptionPane.YES_OPTION: 
+					         //Aktion(en) bei Klicken auf den "Ja-Button"
+					         dataModel.loescheMA(mitarbeiter);
+					         dispose();
+					         controller.updateView();
+					      }
+			}
+		});
         panelButtonNeuerMA.add(buttonNeuerMA);
+        panelButtonNeuerMA.add(buttonMAloeschen);
         panelNorth.add(panelButtonNeuerMA);
 		add(panelNorth);
 		
@@ -129,10 +156,10 @@ public class MAbearbeitenFenster extends JFrame {
 				}
 			}
 		}
-		 if (dataModel.getMitarbeiterArrayList().size() != 0) {
-	        	mitarbeiter = dataModel.getMitarbeiterArrayList().get(0);
-	        	setzeRadioButtonsNeu(); // Dienstplan des ausgewählten MA wird auf die RadioButtons übertragen
-	        }
+		if (dataModel.getMitarbeiterArrayList().size() != 0) {
+	       	mitarbeiter = dataModel.getMitarbeiterArrayList().get(0);
+	       	setzeRadioButtonsNeu(); // Dienstplan des ausgewählten MA wird auf die RadioButtons übertragen
+	    }
 		
 		panelDienstplan.add(panelGeradevormittag);
 		panelDienstplan.add(panelGeradenachmittag);

@@ -35,6 +35,7 @@ public class Controller extends WindowAdapter implements ActionListener {
 		kalenderPanel.setController(this);
 		hauptfenster.setController(this);
 		hauptfenster.fenster.addWindowListener(this);
+		setJahrOnLabel(dataModel.getJahr());
 		kalenderPanel.refresh();
 		hauptfenster.fenster.setVisible(true);
 	}
@@ -130,6 +131,10 @@ public class Controller extends WindowAdapter implements ActionListener {
 	
 	public void updateView() {
 		kalenderPanel.refresh();
+	}
+	
+	public void setJahrOnLabel(int jahr) {
+		hauptfenster.jahrLabel.setText("Jahr 20" + jahr);
 	}
 
 }

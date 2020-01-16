@@ -77,6 +77,7 @@ public class LadenUndSpeichern {
 		inputFile = new File(pfad);
 		if (inputFile.exists()) {
 			try (FileInputStream fileInputStream = new FileInputStream(inputFile)) {
+//				lade Jahr
 				dataModel.setJahr(fileInputStream.read());
 				for (int woche = 0; woche < 52; woche++) {
 					dataModel.setFerienInWocheX(woche, fileInputStream.read());
