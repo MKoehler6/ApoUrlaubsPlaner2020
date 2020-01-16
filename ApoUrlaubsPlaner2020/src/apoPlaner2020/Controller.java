@@ -5,8 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
 public class Controller extends WindowAdapter implements ActionListener {
@@ -124,8 +127,9 @@ public class Controller extends WindowAdapter implements ActionListener {
 	@Override
 	public void windowClosing(WindowEvent e) 
 	{
+		hauptfenster.setVisible(false);
 		ladenUndSpeichern.speichereDaten();
-//		speichern.speichereJPG();
+		ladenUndSpeichern.speichereJPG();
 		System.exit(0);
 	}
 	
@@ -136,5 +140,5 @@ public class Controller extends WindowAdapter implements ActionListener {
 	public void setJahrOnLabel(int jahr) {
 		hauptfenster.jahrLabel.setText("Jahr 20" + jahr);
 	}
-
+	
 }

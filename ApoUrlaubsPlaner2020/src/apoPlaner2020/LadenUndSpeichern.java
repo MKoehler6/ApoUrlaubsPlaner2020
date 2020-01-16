@@ -1,10 +1,13 @@
 package apoPlaner2020;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class LadenUndSpeichern {
 	
@@ -13,12 +16,14 @@ public class LadenUndSpeichern {
 	File inputFile;
 	File outputFile;
 	DataModel dataModel;
+	ErstellenJPG erstellenJPG;
 	
 	public LadenUndSpeichern(DataModel dataModel) {
 		this.dataModel = dataModel;
 	}
 
 	public void speichereDaten() {
+		erstellenJPG = new ErstellenJPG(dataModel);
 		outputFile = new File(pfad);
 		try (FileOutputStream fileOutputStream = new FileOutputStream(outputFile)) {
 //			Jahr speichern
@@ -126,6 +131,16 @@ public class LadenUndSpeichern {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	public void speichereJPG() 
+	{
+		BufferedImage fertigesJPG = erstellenJPG.renderFertigesJPG();
+		File jpgFile = new File(pfadJPG);
+		try {
+			ImageIO.write(fertigesJPG, "png", jpgFile);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

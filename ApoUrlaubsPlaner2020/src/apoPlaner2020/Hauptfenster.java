@@ -45,16 +45,10 @@ public class Hauptfenster extends JPanel {
 		scrollPane = new JScrollPane(kalenderPanel);
 		menu = new JPanel(new GridLayout(9,1));
 		// Menuebereich
-		JLabel menuLabel = new JLabel("Menü", JLabel.CENTER);
-		menuLabel.setOpaque(true);
-		menuLabel.setBackground(new Color(190, 190, 190));
-		menuLabel.setFont(new Font("Arial", 1, 14));
-		menu.add(menuLabel);
-		
 		jahrLabel = new JLabel("", JLabel.CENTER);
-		menuLabel.setOpaque(true);
-		menuLabel.setBackground(new Color(190, 190, 190));
-		menuLabel.setFont(new Font("Arial", 1, 14));
+		jahrLabel.setOpaque(true);
+		jahrLabel.setBackground(new Color(190, 190, 190));
+		jahrLabel.setFont(new Font("Arial", 1, 14));
 		menu.add(jahrLabel);
 		
 		JButton maBearbeitenButton = new JButton("Mitarbeiter bearbeiten");
