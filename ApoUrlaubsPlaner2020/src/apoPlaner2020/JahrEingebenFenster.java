@@ -16,6 +16,9 @@ public class JahrEingebenFenster extends JFrame{
 	
 	DataModel dataModel;
 	Controller controller;
+	private static final int ANZAHL_STELLEN_JAHRESZAHL = 4;
+	private static final int ASCII_CODE_0 = 48;
+	private static final int ASCII_CODE_9 = 57;
 	
 	
 	public JahrEingebenFenster(DataModel dataModel, Controller controller) {
@@ -44,14 +47,14 @@ public class JahrEingebenFenster extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String j = textField.getText();
-				if (j.length() != 4 || j.chars()
-						.filter(c -> c > 47 & c < 58)
-						.count() != 4) {
+				String jahrString = textField.getText();
+				if (jahrString.length() != ANZAHL_STELLEN_JAHRESZAHL || jahrString.chars()
+						.filter(c -> c >= ASCII_CODE_0 & c <= ASCII_CODE_9)
+						.count() != ANZAHL_STELLEN_JAHRESZAHL) {
 					textField.setText("");
 					return;
 				}
-				int jahr = Integer.parseInt(j);
+				int jahr = Integer.parseInt(jahrString);
 				dataModel.setJahr(jahr-2000);
 				dispose();
 				controller.setJahrOnLabel(jahr-2000);

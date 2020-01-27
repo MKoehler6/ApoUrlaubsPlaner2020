@@ -11,10 +11,13 @@ import javax.imageio.ImageIO;
 
 public class LadenUndSpeichern {
 	
-	String pfad = System.getProperty("user.home") + "/Dropbox/HP Laptop/Urlaubsplaner2020NeuTest.txt";
-	String pfadJPG = System.getProperty("user.home") + "/Dropbox/HP Laptop/UrlaubsplanerJPG2020NeuTest.jpg";
+	String pfadInput = System.getProperty("user.home") + "/Dropbox/HP Laptop/Urlaubsplaner";
+	String pfadOutput = System.getProperty("user.home") + "/Dropbox/HP Laptop/Urlaubsplaner";
+	String pfadJPG = System.getProperty("user.home") + "/Dropbox/HP Laptop/UrlaubsplanerJPG";
+	String pfadConfig = System.getProperty("user.home") + "/Dropbox/HP Laptop/UrlaubsplanerConfig.txt";
 	File inputFile;
 	File outputFile;
+	File configFile;
 	DataModel dataModel;
 	ErstellenJPG erstellenJPG;
 	
@@ -23,8 +26,17 @@ public class LadenUndSpeichern {
 	}
 
 	public void speichereDaten() {
+		configFile = new File(pfadConfig);
+		try (FileOutputStream fileOutputStream = new FileOutputStream(configFile)) {
+			fileOutputStream.write(dataModel.getJahr());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		erstellenJPG = new ErstellenJPG(dataModel);
-		outputFile = new File(pfad);
+		outputFile = new File(pfadOutput + "20" + dataModel.getJahr() + ".txt");
 		try (FileOutputStream fileOutputStream = new FileOutputStream(outputFile)) {
 //			Jahr speichern
 			fileOutputStream.write(dataModel.getJahr());
@@ -79,7 +91,15 @@ public class LadenUndSpeichern {
 	}
 
 	public void ladeDaten() {
-		inputFile = new File(pfad);
+		configFile = new File(pfadConfig);
+		try (FileInputStream fileInputStream = new FileInputStream(configFile)) {
+			dataModel.setJahr(fileInputStream.read());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		inputFile = new File(pfadInput + "20" + dataModel.getJahr() + ".txt");
 		if (inputFile.exists()) {
 			try (FileInputStream fileInputStream = new FileInputStream(inputFile)) {
 //				lade Jahr
@@ -136,7 +156,7 @@ public class LadenUndSpeichern {
 	public void speichereJPG() 
 	{
 		BufferedImage fertigesJPG = erstellenJPG.renderFertigesJPG();
-		File jpgFile = new File(pfadJPG);
+		File jpgFile = new File(pfadJPG + "20" + dataModel.getJahr() + ".jpg");
 		try {
 			ImageIO.write(fertigesJPG, "png", jpgFile);
 		} catch (IOException e) {
